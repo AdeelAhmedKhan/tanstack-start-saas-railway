@@ -1,0 +1,65 @@
+/* Minimal, dependency-free styles. No Tailwind on purpose: a starter
+   should build with zero CSS toolchain risk. Restyle freely. */
+:root {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --danger: #dc2626;
+  --radius: 10px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 880px; margin: 0 auto; padding: 0 20px 64px; }
+.nav {
+  display: flex; gap: 18px; align-items: center;
+  max-width: 880px; margin: 0 auto; padding: 16px 20px;
+}
+.nav .brand { font-weight: 800; color: var(--text); font-size: 18px; }
+.nav .spacer { flex: 1; }
+.nav .who { color: var(--muted); font-size: 14px; }
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin: 16px 0;
+}
+.hero { padding: 48px 0 8px; }
+.hero h1 { font-size: 40px; line-height: 1.1; margin: 0 0 12px; }
+.hero p { font-size: 18px; color: var(--muted); margin: 0 0 20px; }
+.btn {
+  display: inline-block; background: var(--accent); color: #fff;
+  border: 0; border-radius: 8px; padding: 10px 18px;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+}
+.btn:hover { background: var(--accent-hover); text-decoration: none; }
+.btn.secondary { background: #e2e8f0; color: var(--text); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+input, select {
+  display: block; width: 100%; padding: 10px 12px; margin: 6px 0 14px;
+  border: 1px solid var(--border); border-radius: 8px; font-size: 15px;
+  background: #fff; color: var(--text);
+}
+label { font-size: 14px; font-weight: 600; }
+.error {
+  background: #fef2f2; color: var(--danger);
+  border: 1px solid #fecaca; border-radius: 8px; padding: 10px 12px; margin: 12px 0;
+}
+.ok { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px; margin: 12px 0; }
+.muted { color: var(--muted); font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.grid .card { margin: 0; }
+code { background: #f1f5f9; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; }
+pre { background: #0f172a; color: #e2e8f0; padding: 14px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+pre code { background: none; padding: 0; }
+ul { padding-left: 20px; }

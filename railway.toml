@@ -1,0 +1,28 @@
+# Railway Config as Code — app service.
+# https://docs.railway.com/guides/tanstack-start
+#
+# Template wiring (done in the Railway dashboard / Template Composer,
+# not in this file — there is no template.json format):
+#   - Add a Postgres service; reference it as DATABASE_URL =
+#     ${{Postgres.DATABASE_URL}} on this service (private network).
+#   - Add a Bucket service for uploads; reference its S3 variables.
+#   - Pre-deploy command runs Drizzle migrations before each deploy, so
+#     a failed migration stops the deploy before the app starts.
+#     drizzle-kit is in `dependencies` (not devDependencies) on purpose,
+#     so it is present in the deployed image.
+#   - Healthcheck must return HTTP 200 directly (no redirect).
+
+[build]
+builder = "RAILPACK"
+buildCommand = "npm run build"
+
+[deploy]
+startCommand = "npm run start"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+preDeployCommand = "npm run db:migrate"
+
+# No PORT setting needed: srvx reads Railway's injected $PORT and binds
+# all interfaces by default.
