@@ -1,7 +1,10 @@
 import { createServerFn } from '@tanstack/react-start'
 import { redirect } from '@tanstack/react-router'
 import { getRequestHeaders } from '@tanstack/react-start/server'
+import { eq } from 'drizzle-orm'
 import { auth } from './auth'
+import { db } from './db'
+import { user as userTable } from './db/schema'
 
 export type SessionUser = {
   id: string
@@ -23,12 +26,23 @@ export const getSessionUser = createServerFn({ method: 'GET' }).handler(
         headers: getRequestHeaders(),
       })
       if (!session?.user) return null
+      // Better Auth's session user object only carries its own core
+      // fields — the app columns (role, plan, stripeCustomerId) are
+      // NOT in it. Read them from the user row instead, or every user
+      // looks like role 'user' / plan 'free' forever: the seeded admin
+      // would show as a plain user, and a paying Pro user would still
+      // be offered "Upgrade to Pro" after checkout.
+      const [row] = await db
+        .select({ role: userTable.role, plan: userTable.plan })
+        .from(userTable)
+        .where(eq(userTable.id, session.user.id))
+        .limit(1)
       return {
         id: session.user.id,
         name: session.user.name,
         email: session.user.email,
-        role: (session.user as { role?: string }).role ?? 'user',
-        plan: (session.user as { plan?: string }).plan ?? 'free',
+        role: row?.role ?? (session.user as { role?: string }).role ?? 'user',
+        plan: row?.plan ?? (session.user as { plan?: string }).plan ?? 'free',
       }
     } catch {
       return null
