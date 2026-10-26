@@ -1,8 +1,6 @@
 # TanStack Start 1.0 SaaS Starter — Deploy on Railway
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/tanstack-start-saas-railway)
-<!-- TODO: replace the link above with this template's real Railway
-     marketplace URL after publishing. The button image stays the same. -->
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/tanstack-start-10-saas-starter)
 
 A production-wired SaaS starter: **TanStack Start 1.0** (type-safe routing,
 `createServerFn`, per-route rendering) + **Postgres + Drizzle ORM** +
